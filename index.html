@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR.js Demo</title>
+  <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+
+  <a-scene embedded arjs>
+    <!-- Marker per l'AR (marker Hiro è uno di default) -->
+    <a-marker preset="hiro">
+      <!-- Modello 3D dello schermo -->
+      <a-entity 
+        gltf-model="url(https://github.com/SimoneG292/file-di-prova/blob/main/codio.gltf)"  <!-- Sostituisci con il percorso del tuo modello 3D -->
+        scale="1 1 1"
+        position="0 0 0">
+        <!-- Video che viene proiettato sullo schermo -->
+        <a-video src="url(https://github.com/SimoneG292/file-di-prova/blob/main/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4)" position="0 0.5 0" width="1" height="0.75"></a-video>
+      </a-entity>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+</body>
+</html>
