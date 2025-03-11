@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Screen with Video</title>
+    <title>AR Screen with Video (No Marker)</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
-        <!-- Marker-based AR -->
-        <a-marker preset="hiro">
-            <!-- A plane that will display the video -->
-            <a-plane width="3" height="2" position="0 0 0" rotation="-90 0 0">
-                <!-- Apply the video texture to the plane -->
-                <a-video src="url(https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4)" width="3" height="2" autoplay="true" loop="true"></a-video>
-            </a-plane>
-        </a-marker>
+    <a-scene embedded arjs='sourceType: webcam;'>
+        <!-- Qui iniziamo la scena AR senza marker -->
+        
+        <!-- Posiziona il video su un piano 3D -->
+        <a-plane width="3" height="2" position="0 0 -5" rotation="-90 0 0">
+            <a-video src="url(https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4)" width="3" height="2" autoplay="true" loop="true"></a-video>
+        </a-plane>
 
-        <!-- AR Camera -->
+        <!-- Fotocamera AR (necessaria per il tracciamento) -->
         <a-entity camera></a-entity>
     </a-scene>
 </body>
