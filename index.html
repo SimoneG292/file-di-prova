@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Fotocamera</title>
 </head>
-<body style="margin: 0; overflow: hidden;">
-    <h1>Test Fotocamera</h1>
+<body>
+    <h1>Test della fotocamera</h1>
     <video id="video" width="100%" height="100%" autoplay></video>
 
     <script>
-        // Accedi alla fotocamera e visualizzala
+        // Accedi alla fotocamera
         navigator.mediaDevices.getUserMedia({ video: true })
         .then(function(stream) {
             var video = document.getElementById('video');
             video.srcObject = stream;
         })
         .catch(function(error) {
-            console.log('Errore fotocamera:', error);
+            alert('Errore nell\'accesso alla fotocamera: ' + error);
         });
     </script>
 </body>
