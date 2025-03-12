@@ -14,5 +14,14 @@
         
         <a-camera></a-camera>
     </a-scene>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var video = document.querySelector('a-video');
+            video.addEventListener('click', function() {
+                video.play();
+            });
+        });
+    </script>
 </body>
 </html>
