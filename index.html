@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test AR con Video</title>
+    <title>AR Video Test</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
@@ -12,18 +12,16 @@
     <!-- Scena AR -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true; trackingMethod: best;">
         
-        <!-- Piano AR che ospiterà la texture video -->
-        <a-plane id="video-plane" position="0 1.5 -3" rotation="0 0 0" width="2" height="1.125" color="grey">
-            <!-- La texture video verrà applicata in JS -->
-        </a-plane>
+        <!-- Piano per il video con una texture che sarà aggiornata dinamicamente -->
+        <a-plane id="video-plane" position="0 1.5 -3" rotation="0 0 0" width="2" height="1.125" color="grey"></a-plane>
 
-        <!-- Fotocamera -->
+        <!-- Fotocamera AR -->
         <a-camera></a-camera>
 
     </a-scene>
 
     <!-- Pulsante Play -->
-    <div id="play-container" style="text-align: center; position: fixed; width: 100%; top: 50%; z-index: 10;">
+    <div style="text-align: center; position: fixed; width: 100%; top: 50%; z-index: 10;">
         <button id="play-button" style="padding: 20px; background-color: #33cc33; color: white; font-size: 20px;">Play</button>
     </div>
 
@@ -31,29 +29,30 @@
         document.addEventListener('DOMContentLoaded', function () {
             var playButton = document.querySelector('#play-button');
             var videoPlane = document.querySelector('#video-plane');
-
-            // Crea un elemento video HTML5
             var videoElement = document.createElement('video');
+            
+            // Imposta il video
             videoElement.src = 'https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4';
-            videoElement.loop = true;  // Opzionale: fa partire il video in loop
-            videoElement.setAttribute('crossorigin', 'anonymous'); // Per evitare errori di CORS
+            videoElement.setAttribute('crossorigin', 'anonymous'); // Per evitare problemi CORS
+            videoElement.load();
+            videoElement.loop = true;
 
             // Crea una texture per il video
             var videoTexture = new THREE.VideoTexture(videoElement);
 
-            // Gestione del clic sul pulsante Play
+            // Gestione del pulsante Play
             playButton.addEventListener('click', function () {
-                // Applica la texture video al piano AR
+                // Applica la texture video al piano nella scena AR
                 videoPlane.setAttribute('material', 'src', videoTexture);
 
-                // Avvia il video
+                // Riproduci il video
                 videoElement.play().then(() => {
-                    console.log("Video partito correttamente");
+                    console.log("Video inizia correttamente!");
                 }).catch((error) => {
-                    console.error("Errore nell'avvio del video: ", error);
+                    console.error("Errore nel video: ", error);
                 });
 
-                // Nascondi il pulsante Play
+                // Nascondi il pulsante Play dopo averlo cliccato
                 playButton.style.display = 'none';
             });
         });
