@@ -21,21 +21,34 @@
     </div>
 
     <script>
-        // Assicurarsi che la pagina sia caricata completamente
         document.addEventListener('DOMContentLoaded', function () {
+            // Assicuriamoci che il codice si esegua dopo che la pagina è stata caricata
             var playButton = document.querySelector('#play-button');
             var videoContainer = document.querySelector('#video-container');
             var videoPlayer = document.querySelector('#video-player');
+            
+            // Controllo che il video si possa avviare
+            if (videoPlayer) {
+                console.log('Elemento video trovato!');
+            } else {
+                console.log('Elemento video NON trovato!');
+            }
 
             // Gestisce il clic sul pulsante Play
             playButton.addEventListener('click', function () {
+                console.log('Pulsante Play cliccato!');
+                
                 // Mostra il player video sopra l'area AR
                 videoContainer.style.display = 'block';
                 
-                // Avvia il video
-                videoPlayer.play();
+                // Verifica se il video si avvia correttamente
+                videoPlayer.play().then(() => {
+                    console.log('Video avviato correttamente');
+                }).catch(error => {
+                    console.log('Errore durante l\'avvio del video:', error);
+                });
 
-                // Nascondi il pulsante Play
+                // Nascondi il pulsante Play dopo il clic
                 playButton.style.display = 'none';
             });
         });
