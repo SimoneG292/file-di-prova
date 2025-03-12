@@ -9,13 +9,14 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true; trackingMethod: best;">
-        <!-- Aggiungi un piano con il video come texture -->
+        <!-- Piano con il video come texture -->
         <a-plane id="video-plane" position="0 1 -3" rotation="0 0 0" width="2" height="1.125" 
-                 material="src: url(https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4);"></a-plane>
+                 material="src: url(https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4); visible: false;"></a-plane>
 
-        <!-- Pulsante Play sopra il video -->
-        <a-entity id="play-button" geometry="primitive: plane; width: 2; height: 1.125" material="color: #333" position="0 1 -2.5">
-            <a-text value="Play" align="center" position="0 0 0.1" color="white"></a-text>
+        <!-- Pulsante Play sotto il video (triangolo) -->
+        <a-entity id="play-button" geometry="primitive: cone; radiusBottom: 0.2; height: 0.4" 
+                  material="color: #33cc33" position="0 0.5 -2.5" rotation="90 0 0">
+            <a-text value="Play" align="center" position="0 0.1 0" color="white"></a-text>
         </a-entity>
 
         <a-camera></a-camera>
@@ -38,7 +39,8 @@
 
                 // Imposta la texture sulla superficie del piano
                 videoPlane.setAttribute('material', 'src', videoTexture);
-                
+                videoPlane.setAttribute('visible', 'true');  // Mostra il piano con il video
+
                 // Rimuovi il pulsante dopo che il video è stato avviato
                 playButton.setAttribute('visible', 'false');
             });
