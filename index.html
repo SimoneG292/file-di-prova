@@ -12,9 +12,9 @@
     <!-- Scena AR -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
         
-        <!-- Piano per video -->
+        <!-- Piano che ospita il video come texture -->
         <a-plane id="video-plane" position="0 1.5 -3" rotation="0 0 0" width="2" height="1.125" color="grey">
-            <!-- La texture video verrà applicata in JS -->
+            <!-- La texture video verrà applicata dinamicamente in JS -->
         </a-plane>
 
         <!-- Fotocamera AR -->
@@ -32,28 +32,28 @@
             var videoPlane = document.querySelector('#video-plane');
             var videoElement = document.createElement('video');
 
-            // Crea il video
+            // Aggiungi il video
             videoElement.src = 'https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4';
             videoElement.setAttribute('crossorigin', 'anonymous');
             videoElement.load();
-            videoElement.loop = true;  // Video in loop
+            videoElement.loop = true; // Video in loop
 
-            // Crea la texture video
+            // Crea una texture video da applicare
             var videoTexture = new THREE.VideoTexture(videoElement);
 
-            // Gestione del pulsante Play
+            // Gestisci il clic sul pulsante Play
             playButton.addEventListener('click', function () {
                 // Applica la texture video al piano
                 videoPlane.setAttribute('material', 'src', videoTexture);
 
                 // Riproduci il video
                 videoElement.play().then(() => {
-                    console.log("Video partito!");
+                    console.log("Video partito correttamente!");
                 }).catch((error) => {
-                    console.error("Errore video: ", error);
+                    console.error("Errore nel video: ", error);
                 });
 
-                // Nascondi il pulsante dopo il clic
+                // Nascondi il pulsante Play
                 playButton.style.display = 'none';
             });
         });
