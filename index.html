@@ -26,21 +26,23 @@
             var playButton = document.querySelector('#play-button');
             var videoPlane = document.querySelector('#video-plane');
             
-            // Quando si clicca sul pulsante "Play", avvia il video
+            // Funzione per avviare il video
             playButton.addEventListener('click', function () {
-                // Mostra il piano con il video
-                videoPlane.setAttribute('visible', 'true');
-                
-                // Imposta la texture del video sulla superficie del piano
-                var videoTexture = new THREE.VideoTexture(document.createElement('video'));
-                var videoElement = videoTexture.image;
-
+                // Crea un elemento video e inizializzalo
+                var videoElement = document.createElement('video');
                 videoElement.src = 'https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4';
-                videoElement.play();
+                videoElement.load();  // Carica il video
+
+                // Crea la texture del video
+                var videoTexture = new THREE.VideoTexture(videoElement);
                 
                 // Imposta la texture sulla superficie del piano
                 videoPlane.setAttribute('material', 'src', videoTexture);
-                
+                videoPlane.setAttribute('visible', 'true');  // Mostra il piano con il video
+
+                // Avvia la riproduzione del video
+                videoElement.play();
+
                 // Rimuovi il pulsante dopo che il video è stato avviato
                 playButton.setAttribute('visible', 'false');
             });
