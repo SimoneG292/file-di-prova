@@ -16,14 +16,32 @@
     </a-scene>
 
     <script>
+        // Funzione per avviare il video manualmente
+        function playVideo() {
+            var video = document.querySelector('#my-video');
+            // Aggiungi un controllo per verificare se il video è pronto per essere riprodotto
+            if (video) {
+                video.play().catch(function(error) {
+                    console.log("Autoplay non riuscito: ", error);
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             var video = document.querySelector('#my-video');
             
-            // Aggiungi un evento di clic su tutto il documento
+            // Forza l'avvio del video alla prima interazione
             document.body.addEventListener('click', function() {
-                // Forza l'avvio del video al primo clic
-                video.play();
+                playVideo();
             });
+            
+            // Inizializza il video in background, ma non farlo partire subito
+            video.oncanplaythrough = function() {
+                console.log("Il video è pronto per essere riprodotto");
+            };
+
+            // Aggiungi anche un ritardo per gestire i problemi di sincronizzazione
+            setTimeout(playVideo, 1000); // Avvia il video dopo 1 secondo dal caricamento della pagina
         });
     </script>
 </body>
