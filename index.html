@@ -12,27 +12,37 @@
         <!-- Aggiungi un piano con il video come texture -->
         <a-video id="my-video" src="https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4" position="0 1 -5" rotation="0 0 0" width="2" height="1.125"></a-video>
         
-        <!-- Pulsante di Play sopra il video -->
-        <a-entity id="play-button" geometry="primitive: plane; width: 2; height: 1.125" material="color: #333" position="0 1 -4.5">
-            <a-text value="Play" align="center" position="0 0 0.1" color="white"></a-text>
-        </a-entity>
-
         <a-camera></a-camera>
     </a-scene>
 
     <script>
+        // Funzione per avviare il video manualmente
+        function playVideo() {
+            var video = document.querySelector('#my-video');
+            // Aggiungi un controllo per verificare se il video è pronto per essere riprodotto
+            if (video) {
+                video.play().catch(function(error) {
+                    console.log("Autoplay non riuscito: ", error);
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             var video = document.querySelector('#my-video');
-            var playButton = document.querySelector('#play-button');
-
-            // Quando si clicca sul pulsante "Play", avvia il video
-            playButton.addEventListener('click', function () {
-                video.play();
-                // Rimuovi il pulsante dopo che il video è stato avviato
-                playButton.setAttribute('visible', 'false');
+            
+            // Forza l'avvio del video alla prima interazione
+            document.body.addEventListener('click', function() {
+                playVideo();
             });
+            
+            // Inizializza il video in background, ma non farlo partire subito
+            video.oncanplaythrough = function() {
+                console.log("Il video è pronto per essere riprodotto");
+            };
+
+            // Aggiungi anche un ritardo per gestire i problemi di sincronizzazione
+            setTimeout(playVideo, 1000); // Avvia il video dopo 1 secondo dal caricamento della pagina
         });
     </script>
 </body>
 </html>
-
