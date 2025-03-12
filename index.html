@@ -35,7 +35,7 @@
             // Crea un elemento video HTML5
             var videoElement = document.createElement('video');
             videoElement.src = 'https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4';
-            videoElement.load();  // Carica il video senza avviarlo
+            videoElement.loop = true;  // Opzionale: fa partire il video in loop
             videoElement.setAttribute('crossorigin', 'anonymous'); // Per evitare errori di CORS
 
             // Crea una texture per il video
@@ -46,7 +46,7 @@
                 // Applica la texture video al piano AR
                 videoPlane.setAttribute('material', 'src', videoTexture);
 
-                // Avvia il video (questa parte assicura che il video inizi quando il pulsante viene premuto)
+                // Avvia il video
                 videoElement.play().then(() => {
                     console.log("Video partito correttamente");
                 }).catch((error) => {
