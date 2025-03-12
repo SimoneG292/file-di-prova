@@ -3,52 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Video Play</title>
+    <title>Test AR con Video</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
 
-    <!-- Pulsante Play -->
-    <div id="play-container" style="text-align: center; margin-top: 20%;">
-        <button id="play-button" style="padding: 20px; background-color: #33cc33; color: white; font-size: 20px;">Play</button>
-    </div>
+    <!-- Inizializza la scena AR -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true; trackingMethod: best;">
 
-    <!-- Video Player (sopra l'area AR) -->
-    <div id="video-container" style="position: fixed; top: 10%; left: 50%; transform: translateX(-50%); display: none;">
-        <video id="video-player" width="320" height="180" controls>
-            <source src="https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4" type="video/mp4">
-            Il tuo browser non supporta il video.
-        </video>
+        <!-- Piano AR per visualizzare il video come texture -->
+        <a-plane id="video-plane" position="0 1.5 -3" rotation="0 0 0" width="2" height="1.125" color="grey">
+            <a-animation attribute="scale" dur="1000" to="1 1 1" begin="click"></a-animation>
+        </a-plane>
+
+        <!-- Fotocamera -->
+        <a-camera></a-camera>
+
+    </a-scene>
+
+    <!-- Pulsante Play -->
+    <div id="play-container" style="text-align: center; position: fixed; width: 100%; top: 50%; z-index: 10;">
+        <button id="play-button" style="padding: 20px; background-color: #33cc33; color: white; font-size: 20px;">Play</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Assicuriamoci che il codice si esegua dopo che la pagina è stata caricata
             var playButton = document.querySelector('#play-button');
-            var videoContainer = document.querySelector('#video-container');
-            var videoPlayer = document.querySelector('#video-player');
-            
-            // Controllo che il video si possa avviare
-            if (videoPlayer) {
-                console.log('Elemento video trovato!');
-            } else {
-                console.log('Elemento video NON trovato!');
-            }
+            var videoPlane = document.querySelector('#video-plane');
 
-            // Gestisce il clic sul pulsante Play
+            // Crea un elemento video
+            var videoElement = document.createElement('video');
+            videoElement.src = 'https://simoneg292.github.io/file-di-prova/blink-182%20-%20Feeling%20This%20(Official%20Video).mp4';
+            videoElement.load();  // Carica il video ma non avviarlo
+
+            var videoTexture = new THREE.VideoTexture(videoElement); // Crea una texture video
+
+            // Al clic sul pulsante Play
             playButton.addEventListener('click', function () {
-                console.log('Pulsante Play cliccato!');
-                
-                // Mostra il player video sopra l'area AR
-                videoContainer.style.display = 'block';
-                
-                // Verifica se il video si avvia correttamente
-                videoPlayer.play().then(() => {
-                    console.log('Video avviato correttamente');
-                }).catch(error => {
-                    console.log('Errore durante l\'avvio del video:', error);
-                });
+                // Imposta la texture del video sulla superficie del piano
+                videoPlane.setAttribute('material', 'src', videoTexture);
 
-                // Nascondi il pulsante Play dopo il clic
+                // Avvia il video
+                videoElement.play();
+
+                // Nascondi il pulsante Play
                 playButton.style.display = 'none';
             });
         });
